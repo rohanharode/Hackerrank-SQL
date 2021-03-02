@@ -1,0 +1,99 @@
+
+<---------------------------------------------- Level - Easy ------------------------------------------------>
+
+Q: Simple SELECT questions - 
+
+SELECT * FROM CITY WHERE COUNTRYCODE = 'USA' AND POPULATION > 100000;
+
+SELECT NAME FROM CITY WHERE COUNTRYCODE = 'USA' AND POPULATION > 120000;
+
+SELECT * FROM CITY;
+
+SELECT * FROM CITY WHERE ID = 1661;
+
+SELECT * FROM CITY WHERE COUNTRYCODE = 'JPN';
+
+SELECT NAME FROM CITY WHERE COUNTRYCODE = 'JPN';
+
+SELECT CITY, STATE FROM STATION;
+
+%%% Weather Observation Station 3 %%%
+Q: Find all unique city names that have even ID number.
+A: SELECT DISTINCT CITY FROM STATION WHERE ID%2 = 0;
+
+%%% Weather Observation Station 4 %%%
+Q: Find the difference between the total number of CITY entries in the table and the number of distinct CITY entries in the table. 
+A: SELECT COUNT(*) - COUNT(DISTINCT(CITY)) FROM STATION;
+
+%%% Weather Observation Station 5 %%%
+Q: Query the two cities in STATION with the shortest and longest CITY names, as well as their respective lengths (i.e.: number of characters in the name). If there is more than one smallest or largest city, choose the one that comes first when ordered alphabetically. 
+A: SELECT TOP 1 CITY, LEN(CITY) FROM STATION ORDER BY LEN(CITY), CITY
+   SELECT TOP 1 CITY, LEN(CITY) FROM STATION ORDER BY LEN(CITY) DESC, CITY ASC;
+
+%%% Weather Observation Station 6 %%%
+Q: Query the list of CITY names starting with vowels (i.e., a, e, i, o, or u) from STATION. Your result cannot contain duplicates.
+A: SELECT DISTINCT CITY FROM STATION WHERE CITY LIKE '[a,e,i,o,u]%';
+
+%%% Weather Observation Station 7 %%%
+Q: Query the list of CITY names ending with vowels (i.e., a, e, i, o, or u) from STATION. Your result cannot contain duplicates.
+A: SELECT DISTINCT CITY FROM STATION WHERE CITY LIKE '%[a,e,i,o,u]';
+
+%%% Weather Observation Station 8 %%%
+Q: Query the list of CITY names from STATION which have vowels (i.e., a, e, i, o, and u) as both their first and last characters. Your result cannot contain duplicates.
+A: SELECT DISTINCT CITY FROM STATION WHERE CITY LIKE '[a,e,i,o,u]%[a,e,i,o,u]';
+
+%%% Weather Observation Station 9 %%%
+Q: Query the list of CITY names from STATION that do not start with vowels. Your result cannot contain duplicates.
+A: SELECT DISTINCT CITY FROM STATION WHERE CITY NOT LIKE '[a,e,i,o,u]%';
+
+%%% Weather Observation Station 10 %%%
+Q: Query the list of CITY names from STATION that do not end with vowels. Your result cannot contain duplicates.
+A: SELECT DISTINCT CITY FROM STATION WHERE CITY NOT LIKE '%[a,e,i,o,u]';
+
+
+%%% Weather Observation Station 11 %%%
+Q: Query the list of CITY names from STATION that either do not start with vowels or do not end with vowels. Your result cannot contain duplicates.
+A: SELECT DISTINCT CITY FROM STATION WHERE CITY NOT LIKE '[a,e,i,o,u]%[a,e,i,o,u]';
+
+%%% Weather Observation Station 12 %%%
+Q: Query the list of CITY names from STATION that either do not start with vowels and do not end with vowels. Your result cannot contain duplicates.
+A: SELECT DISTINCT CITY FROM STATION WHERE CITY NOT LIKE '[a,e,i,o,u]%' AND CITY NOT LIKE '%[a,e,i,o,u]';
+
+%%% Higher than 75 marks %%%
+Q: Query the Name of any student in STUDENTS who scored higher than  Marks. Order your output by the last three characters of each name. If two or more students both have names ending in the same last three characters (i.e.: Bobby, Robby, etc.), secondary sort them by ascending ID.
+A: SELECT Name FROM STUDENTS WHERE Marks > 75 ORDER BY RIGHT(Name, 3), ID;
+
+%%% Employee Names %%%
+Q: Write a query that prints a list of employee names (i.e.: the name attribute) from the Employee table in alphabetical order.
+A: SELECT name FROM Employee ORDER BY name;
+
+%%% Employee Salaries %%%
+Q: Write a query that prints a list of employee names (i.e.: the name attribute) for employees in Employee having a salary greater than $2000 per month who have been employees for less than 10 months. Sort your result by ascending employee_id.
+A: SELECT name FROM Employee WHERE salary > 2000 AND months < 10 ORDER BY employee_id
+
+%%% Top Earners %%% 
+Q: We define an employee's total earnings to be their monthly salary*months worked, and the maximum total earnings to be the maximum total earnings for any employee in the Employee table. Write a query to find the maximum total earnings for all employees as well as the total number of employees who have maximum total earnings.
+A: SELECT TOP 1 months*salary as total, COUNT(employee_id) FROM Employee GROUP BY months*salary ORDER BY total DESC;
+NOTE: Good Question, WHERE clause will not work since aggregation functions like MAX, MIN, AVG doesn't work, HAVING clause also doesn't work (salary = MAX(months*salary))
+
+%%% Weather Observation Station 2 %%% 
+Q: Query the following two values from the STATION table: The sum of all values in LAT_N rounded to a scale of  decimal places and The sum of all values in LONG_W rounded to a scale of  decimal places.
+A: SELECT CONVERT(DECIMAL(10,2),SUM(LAT_N)), CONVERT(DECIMAL(10,2),SUM(LONG_W)) FROM STATION;
+NOTE: In SQL server, ROUND only rounds number to a specified number of decimal places and it doesn't truncate/trim the result to 2 places. Therefore, use CONVERT and trim it 2 decimal places. In MuSQL, ROUND does trimming and rounding both.
+
+%%% Weather Observation Station 13 %%% 
+Q: Query the sum of Northern Latitudes (LAT_N) from STATION having values greater than 38.7880 and less than 137.2345. Truncate your answer to 4 decimal places.
+A: SELECT CONVERT(DECIMAL(10,4),SUM(LAT_N)) FROM STATION WHERE LAT_N > 38.7880 AND LAT_N < 137.2345;
+
+%%% Weather Observation Station 14 %%% 
+Q: Query the greatest value of Northern Latitudes (LAT_N) from STATION that is less than 137.2345. Truncate your answer to 4 decimal places.
+A: SELECT MAX(CONVERT(DECIMAL(10,4),LAT_N)) FROM STATION WHERE LAT_N < 137.2345;
+
+%%% Weather Observation Station 15 %%% 
+Q: Query the Western Longitude (LONG_W) for greatest value of Northern Latitudes (LAT_N) from STATION that is less than 137.2345. Truncate your answer to 4 decimal places.
+A: SELECT CONVERT(DECIMAL(10,4),LONG_W) FROM STATION WHERE LAT_N = (SELECT MAX(LAT_N) FROM STATION WHERE LAT_N < 137.2345);
+NOTE: Whenever we need to find corresponding value based on some aggregation, try to use subquery instead of GROUP BY logic.
+
+
+
+
