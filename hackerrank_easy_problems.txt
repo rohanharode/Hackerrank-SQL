@@ -1,5 +1,5 @@
 
-<---------------------------------------------- Level - Easy ------------------------------------------------>
+<---------------------------------------------- Level - Easy, Environment: Microsoft SQL server ------------------------------------------------>
 
 Q: Simple SELECT questions - 
 
@@ -79,7 +79,7 @@ NOTE: Good Question, WHERE clause will not work since aggregation functions like
 %%% Weather Observation Station 2 %%% 
 Q: Query the following two values from the STATION table: The sum of all values in LAT_N rounded to a scale of  decimal places and The sum of all values in LONG_W rounded to a scale of  decimal places.
 A: SELECT CONVERT(DECIMAL(10,2),SUM(LAT_N)), CONVERT(DECIMAL(10,2),SUM(LONG_W)) FROM STATION;
-NOTE: In SQL server, ROUND only rounds number to a specified number of decimal places and it doesn't truncate/trim the result to 2 places. Therefore, use CONVERT and trim it 2 decimal places. In MuSQL, ROUND does trimming and rounding both.
+NOTE: In SQL server, ROUND only rounds number to a specified number of decimal places and it doesn't truncate/trim the result to 2 places. Therefore, use CONVERT and trim it 2 decimal places. In MuSQL, ROUND does trimm and round both.
 
 %%% Weather Observation Station 13 %%% 
 Q: Query the sum of Northern Latitudes (LAT_N) from STATION having values greater than 38.7880 and less than 137.2345. Truncate your answer to 4 decimal places.
