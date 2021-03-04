@@ -157,13 +157,16 @@ A: SELECT CASE
 	FROM TRIANGLES;
 
 %%% Alternate Queries - Draw Triangle 1 - Top down %%% 
-A: DECLARE @N INT
-	ET @N = 20
+A:  DECLARE @N INT
+	SET @N = 20
 	WHILE @N <> 0
 		BEGIN 
 		PRINT REPLICATE('* ',@N) + CHAR(13)
 		SET @N = @N - 1 
 	END
+
+*** NOTE: There is no FOR loop in SQL, use WHILE loop to do the same.
+*** NOTE: REPLICATE(string, N) allows to repeat/print a statement N times
 
 %%% Alternate Queries - Draw Triangle 2 - Bottom up %%% 
 A:  DECLARE @start INT
@@ -175,3 +178,5 @@ A:  DECLARE @start INT
 		PRINT REPLICATE('* ',@start) + CHAR(13)
 		SET @start = @start + 1 
 	END
+
+*** NOTE: CHAR(10) adds a extra blank line in next line but CHAR(13) allows to print contents in next line without any extra blank line
